@@ -15,7 +15,7 @@ A beautiful, feature-rich Flutter application for exploring countries around the
 - 🌓 Light & Dark theme support
 - 📱 Responsive design for all screen sizes
 - 🚀 Bloc state management
-- 🌐 Internationalization support
+- 🌐 Internationalization support settings
 
 ## 🚀 Getting Started
 
