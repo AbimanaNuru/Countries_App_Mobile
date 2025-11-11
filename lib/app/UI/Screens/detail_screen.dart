@@ -67,7 +67,7 @@ class _DetailScreenContent extends StatelessWidget {
 
   Widget _buildDetailContent(BuildContext context, CountryDetails details) {
     final theme = Theme.of(context);
-    final customTheme = theme.extension<AbeliaTheme>();
+    final customTheme = theme.extension<CountryAppTheme>();
     final flagUrl = Helpers.getFlagUrl(details.flags);
     final countryName = Helpers.getCommonName(details.name);
     final capital = Helpers.getCapital(details.capital);
@@ -235,7 +235,7 @@ class _DetailScreenContent extends StatelessWidget {
 
   Widget _buildTimezones(BuildContext context, List<String> timezones) {
     final theme = Theme.of(context);
-    final customTheme = theme.extension<AbeliaTheme>();
+    final customTheme = theme.extension<CountryAppTheme>();
 
     if (timezones.isEmpty) {
       return Text(

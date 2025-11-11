@@ -58,10 +58,17 @@ class CountrySummaryBloc
     Emitter<CountrySummaryState> emit,
   ) async {
     try {
-      final countries = await _repository.getAllCountries();
+      // Use refreshCountries to bypass cache and get fresh data
+      final countries = await _repository.refreshCountries();
       emit(CountrySummaryLoaded(countries));
     } catch (e) {
-      emit(CountrySummaryError(e.toString()));
+      // If refresh fails, try to get cached data
+      try {
+        final countries = await _repository.getAllCountries();
+        emit(CountrySummaryLoaded(countries));
+      } catch (_) {
+        emit(CountrySummaryError(e.toString()));
+      }
     }
   }
 }

@@ -1,6 +1,7 @@
+import 'package:countries_mobile_app/app/Business%20Logic/Theme/ThemeComponent.dart';
 import 'package:flutter/material.dart';
+
 import '../../Data Layer/Models/countrySummary/country_summary.dart';
-import '../Utils/Constants/Constants.dart';
 import '../Utils/helpers.dart';
 
 class CountryCard extends StatelessWidget {
@@ -22,6 +23,9 @@ class CountryCard extends StatelessWidget {
     final flagUrl = Helpers.getFlagUrl(country.flags);
     final countryName = Helpers.getCommonName(country.name);
     final population = Helpers.formatPopulation(country.population);
+
+    final theme = Theme.of(context);
+    final customTheme = theme.extension<CountryAppTheme>();
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -66,7 +70,7 @@ class CountryCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              
+
               // Country Info
               Expanded(
                 child: Column(
@@ -74,10 +78,10 @@ class CountryCard extends StatelessWidget {
                   children: [
                     Text(
                       countryName,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: AbeliaCoreColors.foreground,
+                        color: customTheme?.textColor,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -93,7 +97,7 @@ class CountryCard extends StatelessWidget {
                   ],
                 ),
               ),
-              
+
               // Favorite Icon
               IconButton(
                 icon: Icon(

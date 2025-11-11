@@ -7,6 +7,14 @@
 
 A beautiful, feature-rich Flutter application for exploring countries around the world. Built with modern Flutter practices and clean architecture.
 
+
+## 📱 App Demo
+
+https://github.com/user-attachments/assets/0f13ea29-7084-416b-be42-ec830c6a5d8c
+
+> *Note: If the video doesn't load, you can view it directly in the [assets folder](assets/Country%20App.mov)*
+
+
 ## ✨ Features
 
 - 🌎 Browse all countries with key information
@@ -21,7 +29,8 @@ A beautiful, feature-rich Flutter application for exploring countries around the
 
 ### Prerequisites
 
-- Flutter SDK (latest stable version)
+- Flutter SDK (3.35.0 or higher)
+- Dart SDK (3.9.0 or higher)
 - Android Studio / Xcode (for mobile development)
 - VS Code or Android Studio with Flutter plugins
 
@@ -33,12 +42,27 @@ A beautiful, feature-rich Flutter application for exploring countries around the
    cd countries-mobile-app
    ```
 
-2. **Install dependencies**
+2. **Set up environment variables**
+   
+   Create a `.env` file in the root directory:
+   ```sh
+   touch .env
+   ```
+   
+   Add the following content to `.env`:
+   ```env
+   # API Configuration
+   BASE_URL=https://restcountries.com/v3.1
+   ```
+   
+   **Note:** The `.env` file is already included in `.gitignore` to keep sensitive data secure.
+
+3. **Install dependencies**
    ```sh
    flutter pub get
    ```
 
-3. **Run the app**
+4. **Run the app**
    ```sh
    # For development
    flutter run --flavor development --target lib/main_development.dart
@@ -50,17 +74,38 @@ A beautiful, feature-rich Flutter application for exploring countries around the
    flutter run --flavor production --target lib/main_production.dart
    ```
 
+### Environment Variables
+
+The app uses environment variables to manage configuration across different environments:
+
+| Variable | Description | Required | Default |
+|----------|-------------|----------|----------|
+| `BASE_URL` | REST Countries API base URL | Yes | `https://restcountries.com/v3.1` |
+
+These variables are loaded using the `flutter_dotenv` package and accessed throughout the app.
+
 ### Project Structure
 
 ```
 lib/
 ├── app/
-│   ├── Business Logic/     # BLoCs, Events, States
-│   ├── Data Layer/         # Models, Repositories, Data Sources
-│   ├── UI/                 # Screens, Widgets, Themes
-│   └── Utils/              # Helpers, Constants
-├── l10n/                   # Localization files
-└── main_development.dart   # Entry points
+│   ├── Business Logic/          # State Management
+│   │   ├── CountrySummary/      # Country list BLoC
+│   │   ├── FavoritesCountry/    # Favorites management BLoC
+│   │   └── Theme/               # Theme management BLoC
+│   ├── Data Layer/              # Data Management
+│   │   ├── Models/              # Data models (Country, Details)
+│   │   └── Repository/          # API service & repository
+│   ├── UI/                      # User Interface
+│   │   ├── Screens/             # App screens (Home, Detail, Splash)
+│   │   ├── Widgets/             # Reusable widgets
+│   │   └── Utils/               # UI helpers, constants, themes
+│   └── view/                    # App root widget
+├── l10n/                        # Localization files
+├── bootstrap.dart               # App initialization
+├── main_development.dart        # Development entry point
+├── main_staging.dart            # Staging entry point
+└── main_production.dart         # Production entry point
 ```
 
 ## 🧪 Testing
@@ -83,10 +128,89 @@ flutter test test/path/to/test_file.dart
 
 - [Flutter](https://flutter.dev/) - Beautiful native apps in record time
 - [Bloc](https://bloclibrary.dev/) - Predictable state management
-- [Dio](https://pub.dev/packages/dio) - Powerful HTTP client
+- [HTTP](https://pub.dev/packages/http) - HTTP client for API calls
 - [Shared Preferences](https://pub.dev/packages/shared_preferences) - Local storage for favorites
 - [Flutter Localizations](https://flutter.dev/docs/development/accessibility-and-localization/internationalization) - Internationalization support
+- [Flutter DotEnv](https://pub.dev/packages/flutter_dotenv) - Environment variable management
+- [Shimmer](https://pub.dev/packages/shimmer) - Loading shimmer effect
 - [Very Good Analysis](https://pub.dev/packages/very_good_analysis) - Linting rules
+
+## 🏗️ Architecture & Technology Choices
+
+### Clean Architecture
+
+This app follows **Clean Architecture** principles with clear separation of concerns:
+
+```
+┌─────────────────────────────────────────────┐
+│           Presentation Layer                │
+│  (UI Screens, Widgets, BLoC Builders)       │
+└──────────────────┬──────────────────────────┘
+                   │
+┌──────────────────▼──────────────────────────┐
+│          Business Logic Layer               │
+│     (BLoCs, Events, States, Use Cases)      │
+└──────────────────┬──────────────────────────┘
+                   │
+┌──────────────────▼──────────────────────────┐
+│            Data Layer                       │
+│  (Repositories, API Services, Models)       │
+└─────────────────────────────────────────────┘
+```
+
+### State Management: BLoC Pattern
+
+**Why BLoC?**
+
+1. **Separation of Concerns**: Business logic is completely separated from UI
+2. **Testability**: Easy to write unit tests for business logic
+3. **Predictability**: State changes are explicit and traceable
+4. **Scalability**: Works well for large applications
+5. **Reactive**: Stream-based architecture for reactive programming
+
+**BLoCs in this app:**
+- `CountrySummaryBloc`: Manages country list, search, and refresh
+- `FavoritesCountryBloc`: Handles favorite countries (persisted locally)
+- `ThemeBloc`: Manages light/dark theme switching
+
+### Data Management
+
+**Repository Pattern**: Abstracts data sources from business logic
+- `CountriesRepository`: Provides clean API for country data
+- `CountriesApiService`: Handles HTTP requests to REST Countries API
+
+**Local Storage**: Uses `SharedPreferences` for:
+- Favorite countries persistence
+- Theme preference storage
+
+### UI/UX Features
+
+1. **Splash Screen**: Animated splash with smooth transition
+2. **Shimmer Loading**: Beautiful loading states
+3. **Pull-to-Refresh**: Intuitive data refresh mechanism
+4. **Scrollbar**: Visible scrollbar for better navigation
+5. **Search**: Real-time country search with debouncing
+6. **Theme Support**: Light and dark mode
+7. **Responsive Design**: Adapts to different screen sizes
+
+### Build Flavors
+
+The app supports three build flavors:
+- **Development**: For active development with debug features
+- **Staging**: For testing in a production-like environment
+- **Production**: For release builds
+
+Each flavor has:
+- Separate entry point (`main_*.dart`)
+- Different app identifiers
+- Custom app names with prefixes ([DEV], [STG])
+
+### Code Quality
+
+- **Very Good Analysis**: Strict linting rules for code quality
+- **Type Safety**: Strong typing throughout the codebase
+- **Error Handling**: Comprehensive error handling with user-friendly messages
+- **Documentation**: Well-documented code with clear comments
 
 ## 🌐 Localization
 
@@ -147,7 +271,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 <div align="center">
-  Made with ❤️ by Nuru
+  Made with ❤️ by Nuru Abimana
 </div>
 
 [coverage_badge]: coverage_badge.svg

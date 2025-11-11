@@ -23,7 +23,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final customTheme = theme.extension<AbeliaTheme>();
+    final customTheme = theme.extension<CountryAppTheme>();
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,

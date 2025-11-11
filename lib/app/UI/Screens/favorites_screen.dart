@@ -1,3 +1,4 @@
+import 'package:countries_mobile_app/app/Business%20Logic/Theme/ThemeComponent.dart';
 import 'package:countries_mobile_app/app/UI/Widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -101,9 +102,10 @@ class _FavoriteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final flagUrl = Helpers.getFlagUrl(country.flags);
     final countryName = Helpers.getCommonName(country.name);
-    // final capital = country.capital?.isNotEmpty == true
-    //     ? country.capital!.first
-    //     : 'N/A';
+    final theme = Theme.of(context);
+    final customTheme = theme.extension<CountryAppTheme>();
+
+    final capital = Helpers.getCapital(country.capital);
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
@@ -156,20 +158,22 @@ class _FavoriteCard extends StatelessWidget {
                   children: [
                     Text(
                       countryName,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: AbeliaCoreColors.foreground,
+                        color: customTheme?.textColor,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Capital: Need custom',
+                      'Capital: $capital',
                       style: TextStyle(
                         fontSize: 14,
-                        color: Colors.grey.shade600,
+                        color:
+                            customTheme?.textColor?.withValues(alpha: 0.7) ??
+                            Colors.grey.shade600,
                       ),
                     ),
                   ],

@@ -1,3 +1,4 @@
+import 'package:countries_mobile_app/app/Business%20Logic/Theme/ThemeComponent.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -6,13 +7,15 @@ class LoadingShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final customTheme = theme.extension<CountryAppTheme>();
     return ListView.builder(
       itemCount: 10,
       padding: const EdgeInsets.all(16),
       itemBuilder: (context, index) {
         return Shimmer.fromColors(
-          baseColor: Colors.grey.shade300,
-          highlightColor: Colors.grey.shade100,
+          baseColor: customTheme!.cardShimmerBackgroundColor,
+          highlightColor: customTheme!.cardColor,
           child: Card(
             margin: const EdgeInsets.only(bottom: 16),
             child: Padding(
@@ -23,7 +26,7 @@ class LoadingShimmer extends StatelessWidget {
                     width: 60,
                     height: 45,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: customTheme!.cardColor,
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
@@ -36,7 +39,7 @@ class LoadingShimmer extends StatelessWidget {
                           width: double.infinity,
                           height: 16,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: customTheme!.cardColor,
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),
@@ -45,7 +48,7 @@ class LoadingShimmer extends StatelessWidget {
                           width: 120,
                           height: 14,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: customTheme!.cardColor,
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),

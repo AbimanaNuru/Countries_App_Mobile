@@ -18,7 +18,7 @@ class SearchBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final customTheme = theme.extension<AbeliaTheme>();
+    final customTheme = theme.extension<CountryAppTheme>();
     return Container(
       margin: const EdgeInsets.all(16),
       decoration: BoxDecoration(

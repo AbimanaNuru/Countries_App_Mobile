@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:countries_mobile_app/app/UI/Widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,9 +56,34 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _onRefresh() async {
+    final completer = Completer<void>();
+
+    // Listen for state changes
+    final subscription = context.read<CountrySummaryBloc>().stream.listen((
+      state,
+    ) {
+      if (state is CountrySummaryLoaded || state is CountrySummaryError) {
+        if (!completer.isCompleted) {
+          completer.complete();
+        }
+      }
+    });
+
+    // Trigger refresh
     context.read<CountrySummaryBloc>().add(RefreshCountriesEvent());
-    // Wait for the bloc to emit a new state
-    await context.read<CountrySummaryBloc>().stream.first;
+
+    // Wait for completion with timeout
+    await completer.future.timeout(
+      const Duration(seconds: 10),
+      onTimeout: () {
+        if (!completer.isCompleted) {
+          completer.complete();
+        }
+      },
+    );
+
+    // Clean up subscription
+    await subscription.cancel();
   }
 
   void _navigateToDetail(CountrySummary country) {

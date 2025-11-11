@@ -10,7 +10,7 @@ AppBar buildAppBar({
   bool showBackButton = false,
 }) {
   final theme = Theme.of(context);
-  final customTheme = theme.extension<AbeliaTheme>();
+  final customTheme = theme.extension<CountryAppTheme>();
 
   return AppBar(
     title: Text(

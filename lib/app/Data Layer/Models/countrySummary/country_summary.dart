@@ -10,24 +10,28 @@ class CountrySummary extends Equatable {
     required this.flags,
     required this.population,
     required this.cca2,
+    required this.capital,
   });
 
   final DynamicObject? name;
   final DynamicObject? flags;
   final int? population;
   final String? cca2;
+  final List<String>? capital;
 
   CountrySummary copyWith({
     DynamicObject? name,
     DynamicObject? flags,
     int? population,
     String? cca2,
+    List<String>? capital,
   }) {
     return CountrySummary(
       name: name ?? this.name,
       flags: flags ?? this.flags,
       population: population ?? this.population,
       cca2: cca2 ?? this.cca2,
+      capital: capital ?? this.capital,
     );
   }
 
@@ -38,29 +42,35 @@ class CountrySummary extends Equatable {
 
   @override
   String toString() =>
-      "CountrySummary(name: $name, flags: $flags, population: $population, cca2: $cca2)";
+      'CountrySummary(name: $name, flags: $flags, population: $population, cca2: $cca2, capital: $capital)';
 
   @override
-  List<Object?> get props => [name, flags, population, cca2];
+  List<Object?> get props => [name, flags, population, cca2, capital];
 }
 
 @JsonSerializable()
 class DynamicObject extends Equatable {
   const DynamicObject({this.data});
 
-  /// Store any type of JSON object here (string, int, map, etc.)
   final dynamic data;
 
   factory DynamicObject.fromJson(dynamic json) {
     if (json is Map<String, dynamic>) {
       return DynamicObject(data: json);
-    } else {
-      // If it's just a string (e.g. "Syria")
-      return DynamicObject(data: {'value': json});
     }
+    return DynamicObject(data: {'value': json});
   }
 
   dynamic toJson() => data;
+
+  /// Helper to safely return string values when available
+  String? get asString {
+    if (data is String) return data as String?;
+    if (data is Map<String, dynamic>) {
+      return data['value'] as String?;
+    }
+    return null;
+  }
 
   @override
   String toString() => data.toString();

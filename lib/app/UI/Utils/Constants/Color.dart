@@ -1,6 +1,6 @@
 part of Constants;
 
-class AbeliaCoreColors {
+class CountryAppCoreColors {
   // Primary & Secondary Colors
   static const Color primary = Color(0xFF0052CC);
   static const Color semiPrimary = Color(0xFF4C9AFF);
@@ -23,4 +23,10 @@ class AbeliaCoreColors {
   // Shimmer Colors
   static const Color shimmerBaseColor = Color(0xFFE0E0E0);
   static const Color shimmerHighlightColor = Color(0xFFF5F5F5);
+  static const Color shimmerForegroundColor = Color.fromARGB(
+    255,
+    186,
+    180,
+    180,
+  );
 }

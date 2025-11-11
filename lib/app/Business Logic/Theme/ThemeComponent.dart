@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 /// THEME EXTENSION
 /// ================================
 @immutable
-class AbeliaTheme extends ThemeExtension<AbeliaTheme> {
-  const AbeliaTheme({
+class CountryAppTheme extends ThemeExtension<CountryAppTheme> {
+  const CountryAppTheme({
     required this.appBarColor,
     required this.backgroundColor,
     required this.semiBackgroundColor,
@@ -29,7 +29,8 @@ class AbeliaTheme extends ThemeExtension<AbeliaTheme> {
     required this.shimmerHighlightColor,
     required this.bottomNavigationBarbackgroundColor,
     required this.bottomNavigationBarItemColor,
-
+    required this.cardShimmerBackgroundColor,
+    required this.splashScreenBackgroundColor,
   });
 
   final Color appBarColor;
@@ -56,9 +57,11 @@ class AbeliaTheme extends ThemeExtension<AbeliaTheme> {
   final Color shimmerHighlightColor;
   final Color bottomNavigationBarbackgroundColor;
   final Color bottomNavigationBarItemColor;
+  final Color cardShimmerBackgroundColor;
+  final Color splashScreenBackgroundColor;
 
   @override
-  AbeliaTheme copyWith({
+  CountryAppTheme copyWith({
     Color? appBarColor,
     Color? backgroundColor,
     Color? semiBackgroundColor,
@@ -81,8 +84,10 @@ class AbeliaTheme extends ThemeExtension<AbeliaTheme> {
     Color? shimmerHighlightColor,
     Color? bottomNavigationBarbackgroundColor,
     Color? bottomNavigationBarItemColor,
+    Color? cardShimmerBackgroundColor,
+    Color? splashScreenBackgroundColor,
   }) {
-    return AbeliaTheme(
+    return CountryAppTheme(
       appBarColor: appBarColor ?? this.appBarColor,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       semiBackgroundColor: semiBackgroundColor ?? this.semiBackgroundColor,
@@ -105,16 +110,21 @@ class AbeliaTheme extends ThemeExtension<AbeliaTheme> {
       shimmerHighlightColor:
           shimmerHighlightColor ?? this.shimmerHighlightColor,
       bottomNavigationBarbackgroundColor:
-          bottomNavigationBarbackgroundColor ?? this.bottomNavigationBarbackgroundColor,
+          bottomNavigationBarbackgroundColor ??
+          this.bottomNavigationBarbackgroundColor,
       bottomNavigationBarItemColor:
           bottomNavigationBarItemColor ?? this.bottomNavigationBarItemColor,
+      cardShimmerBackgroundColor:
+          cardShimmerBackgroundColor ?? this.cardShimmerBackgroundColor,
+      splashScreenBackgroundColor:
+          splashScreenBackgroundColor ?? this.splashScreenBackgroundColor,
     );
   }
 
   @override
-  AbeliaTheme lerp(ThemeExtension<AbeliaTheme>? other, double t) {
-    if (other is! AbeliaTheme) return this;
-    return AbeliaTheme(
+  CountryAppTheme lerp(ThemeExtension<CountryAppTheme>? other, double t) {
+    if (other is! CountryAppTheme) return this;
+    return CountryAppTheme(
       appBarColor: Color.lerp(appBarColor, other.appBarColor, t)!,
       backgroundColor: Color.lerp(backgroundColor, other.backgroundColor, t)!,
       semiBackgroundColor: Color.lerp(
@@ -181,6 +191,16 @@ class AbeliaTheme extends ThemeExtension<AbeliaTheme> {
         other.bottomNavigationBarItemColor,
         t,
       )!,
+      cardShimmerBackgroundColor: Color.lerp(
+        cardShimmerBackgroundColor,
+        other.cardShimmerBackgroundColor,
+        t,
+      )!,
+      splashScreenBackgroundColor: Color.lerp(
+        splashScreenBackgroundColor,
+        other.splashScreenBackgroundColor,
+        t,
+      )!,
     );
   }
 }
@@ -191,71 +211,75 @@ class AbeliaTheme extends ThemeExtension<AbeliaTheme> {
 class AppTheme {
   static final lightTheme = ThemeData.light().copyWith(
     colorScheme: const ColorScheme.light(
-      primary: AbeliaCoreColors.primary,
-      secondary: AbeliaCoreColors.semiPrimary,
+      primary: CountryAppCoreColors.primary,
+      secondary: CountryAppCoreColors.semiPrimary,
     ),
-    scaffoldBackgroundColor: AbeliaCoreColors.white,
-    dividerColor: AbeliaCoreColors.muted,
+    scaffoldBackgroundColor: CountryAppCoreColors.white,
+    dividerColor: CountryAppCoreColors.muted,
     extensions: [
-      AbeliaTheme(
-        appBarColor: AbeliaCoreColors.primary,
-        backgroundColor: AbeliaCoreColors.white,
-        semiBackgroundColor: AbeliaCoreColors.gray,
-        textColor: AbeliaCoreColors.foreground,
-        buttonColor: AbeliaCoreColors.primary,
-        blackButtonColor: AbeliaCoreColors.black,
-        iconColor: AbeliaCoreColors.primary,
-        cardColor: AbeliaCoreColors.white,
-        dividerColor: AbeliaCoreColors.muted,
-        menuItemBackground: AbeliaCoreColors.semiPrimary,
-        switchThumbColor: AbeliaCoreColors.white,
-        switchTrackColor: AbeliaCoreColors.primary.withOpacity(0.4),
-        profileHeaderColor: AbeliaCoreColors.black,
-        semiPrimary: AbeliaCoreColors.semiPrimary,
-        primary: AbeliaCoreColors.primary,
-        cardBackgroundColor: AbeliaCoreColors.cardBackground,
-        searchBarColor: AbeliaCoreColors.searchBarColor,
-        borderColor: AbeliaCoreColors.borderColor,
-        shimmerBaseColor: AbeliaCoreColors.shimmerBaseColor,
-        shimmerHighlightColor: AbeliaCoreColors.shimmerHighlightColor,
-        bottomNavigationBarbackgroundColor: AbeliaCoreColors.white,
-        bottomNavigationBarItemColor: AbeliaCoreColors.black,
+      CountryAppTheme(
+        appBarColor: CountryAppCoreColors.primary,
+        backgroundColor: CountryAppCoreColors.white,
+        semiBackgroundColor: CountryAppCoreColors.gray,
+        textColor: CountryAppCoreColors.foreground,
+        buttonColor: CountryAppCoreColors.primary,
+        blackButtonColor: CountryAppCoreColors.black,
+        iconColor: CountryAppCoreColors.primary,
+        cardColor: CountryAppCoreColors.white,
+        dividerColor: CountryAppCoreColors.muted,
+        menuItemBackground: CountryAppCoreColors.semiPrimary,
+        switchThumbColor: CountryAppCoreColors.white,
+        switchTrackColor: CountryAppCoreColors.primary.withOpacity(0.4),
+        profileHeaderColor: CountryAppCoreColors.black,
+        semiPrimary: CountryAppCoreColors.semiPrimary,
+        primary: CountryAppCoreColors.primary,
+        cardBackgroundColor: CountryAppCoreColors.cardBackground,
+        searchBarColor: CountryAppCoreColors.searchBarColor,
+        borderColor: CountryAppCoreColors.borderColor,
+        shimmerBaseColor: CountryAppCoreColors.shimmerBaseColor,
+        shimmerHighlightColor: CountryAppCoreColors.shimmerHighlightColor,
+        bottomNavigationBarbackgroundColor: CountryAppCoreColors.white,
+        bottomNavigationBarItemColor: CountryAppCoreColors.black,
+        cardShimmerBackgroundColor: CountryAppCoreColors.shimmerForegroundColor,
+        splashScreenBackgroundColor: CountryAppCoreColors.black,
       ),
     ],
   );
 
-  static final darkTheme = ThemeData.dark().copyWith(
+  static final ThemeData darkTheme = ThemeData.dark().copyWith(
     colorScheme: const ColorScheme.dark(
-      primary: AbeliaCoreColors.primary,
-      secondary: AbeliaCoreColors.semiPrimary,
-      surface: AbeliaCoreColors.black,
+      primary: CountryAppCoreColors.primary,
+      secondary: CountryAppCoreColors.semiPrimary,
+      surface: CountryAppCoreColors.black,
     ),
     scaffoldBackgroundColor: const Color(0xFF121212),
     dividerColor: Colors.grey[800],
     extensions: [
-      AbeliaTheme(
+      CountryAppTheme(
         appBarColor: const Color(0xFF1F1F1F),
-        backgroundColor: AbeliaCoreColors.black,
+        backgroundColor: CountryAppCoreColors.black,
         semiBackgroundColor: const Color(0xFF1F1F1F),
-        textColor: AbeliaCoreColors.white,
-        buttonColor: AbeliaCoreColors.primary,
-        blackButtonColor: AbeliaCoreColors.primary,
-        iconColor: AbeliaCoreColors.primary,
+        textColor: CountryAppCoreColors.white,
+        buttonColor: CountryAppCoreColors.primary,
+        blackButtonColor: CountryAppCoreColors.primary,
+        iconColor: CountryAppCoreColors.primary,
         cardColor: const Color(0xFF1F1F1F),
         dividerColor: Colors.grey[800]!,
         menuItemBackground: const Color(0xFF303030),
-        switchThumbColor: AbeliaCoreColors.primary,
+        switchThumbColor: CountryAppCoreColors.primary,
         switchTrackColor: Colors.grey[600]!,
         profileHeaderColor: const Color(0xFF1F1F1F),
         semiPrimary: const Color(0xFF1F1F1F),
-        primary: AbeliaCoreColors.black,
+        primary: CountryAppCoreColors.black,
         cardBackgroundColor: const Color(0xFF1F1F1F),
         searchBarColor: const Color(0xFF2A2A2A),
         borderColor: Colors.grey,
         shimmerBaseColor: Colors.grey,
         shimmerHighlightColor: Colors.grey,
-        bottomNavigationBarbackgroundColor: AbeliaCoreColors.black,
-        bottomNavigationBarItemColor: AbeliaCoreColors.white,
+        bottomNavigationBarbackgroundColor: CountryAppCoreColors.black,
+        bottomNavigationBarItemColor: CountryAppCoreColors.white,
+        cardShimmerBackgroundColor: CountryAppCoreColors.foreground,
+        splashScreenBackgroundColor: CountryAppCoreColors.black,
       ),
     ],
   );

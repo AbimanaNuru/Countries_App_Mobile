@@ -28,7 +28,11 @@ class FavoritesCountryBloc
       final favoritesJson = prefs.getStringList(_favoritesKey) ?? [];
 
       final favorites = favoritesJson
-          .map((json) => CountrySummary.fromJson(jsonDecode(json) as Map<String, dynamic>))
+          .map(
+            (json) => CountrySummary.fromJson(
+              jsonDecode(json) as Map<String, dynamic>,
+            ),
+          )
           .toList();
 
       final cca2Codes = favorites

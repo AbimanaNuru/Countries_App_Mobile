@@ -42,7 +42,7 @@ class ErrorView extends StatelessWidget {
               icon: const Icon(Icons.refresh),
               label: Text(CountryAppText.retry),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AbeliaCoreColors.gray,
+                backgroundColor: CountryAppCoreColors.gray,
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,

@@ -13,6 +13,8 @@ CountrySummary _$CountrySummaryFromJson(Map<String, dynamic> json) =>
           json['flags'] == null ? null : DynamicObject.fromJson(json['flags']),
       population: (json['population'] as num?)?.toInt(),
       cca2: json['cca2'] as String?,
+      capital:
+          (json['capital'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$CountrySummaryToJson(CountrySummary instance) =>
@@ -21,6 +23,7 @@ Map<String, dynamic> _$CountrySummaryToJson(CountrySummary instance) =>
       'flags': instance.flags,
       'population': instance.population,
       'cca2': instance.cca2,
+      'capital': instance.capital,
     };
 
 DynamicObject _$DynamicObjectFromJson(Map<String, dynamic> json) =>
